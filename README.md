@@ -12,4 +12,9 @@ Yet Another Django Blog
 
 The static files (main.css, images) and templates are taken from [PyLadiesBYOBlog](https://github.com/econchick/PyLadiesBYOBlog)
 
-  ![WTF?](https://www.dropbox.com/s/8g5r0owaylr2y2b/laubali.jpg)
+## General Guidelines
+1. Coding should obey PEP8 rules restrictly.
+2. All html forms must be validated using django form. See [Django form and field validation](https://docs.djangoproject.com/en/1.3/ref/forms/validation/) for details.
+3. GenericForeignKey's must be used. See [Content Types Framework](https://docs.djangoproject.com/en/1.3/ref/contrib/contenttypes/) for details. 
+4. Caching should be encouraged. [Redis](http://redis.io/) must be used for cache backend. See [redis-py](https://github.com/andymccurdy/redis-py/) for details.
+5. Every user must have a profile. 
