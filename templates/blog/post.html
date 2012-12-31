@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="main">
+        <!-- Posts  -->
+        <ul>
+            <div class="title">{{ post.title }}</div>
+            <ul>
+                <div class="time">{{ post.created }}</div>
+                <div class="body">{{ post.body|linebreaks }}</div>
+            </ul>
+            <a href="{% url home %}">Back to Blog Frontpage</a>
+        </ul>
+        <!-- Comments -->
+        <!-- If you have a Disqus account, copy & paste the Javascript code they gave you here. -->
+{% endblock %}
