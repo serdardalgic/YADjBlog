@@ -25,9 +25,9 @@
     <div class="wrapper">
       <h1 class="huge"><a href="{% url home %}">Serdar's Blog</a></h1>
       {% if user.is_staff %}
-        <h3 class="normal"><a href="{% url admin:index %}">Admin</a> | <a href="{% url admin:SerdarsBlog_post_add %}">Add post</a></h3>
+      <h3 class="normal"><a href="{% url admin:index %}">Admin</a> | <a href="{% url admin:SerdarsBlog_post_add %}">Add post</a> | <a href="{% url admin:logout %}">Logout</a></h3>
       {% else %}
-        <h3 class="normal"><a href="mailto:sd@serdardalgic.org">Contact</a></h3>
+      <h3 class="normal"><a href="mailto:sd@serdardalgic.org">Contact</a> | <a href="{% url admin:index %}">Login</a></h3>
       {% endif %}
     </div>
   </header>

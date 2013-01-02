@@ -1,12 +1,12 @@
 # Create your views here.
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 from SerdarsBlog.models import Post
 
 def home(request):
-    posts = Post.objects.all().order_by("-created")
+    posts = Post.objects.all().order_by("-created_on")
     paginator = Paginator(posts, 5)
 
     try:
@@ -19,9 +19,9 @@ def home(request):
     except (InvalidPage, EmptyPage):
         posts = paginator.page(paginator.num_pages)
 
-    return render_to_response("list.html", dict(posts=posts, user=request.user))
+    return render(request, "list.html", dict(posts=posts, user=request.user))
 
 
 def post(request, pk):
     post = Post.objects.get(pk=int(pk))
-    return render_to_response("post.html", dict(post=post, user=request.user))
+    return render(request, "post.html", dict(post=post, user=request.user))
