@@ -1,6 +1,5 @@
 # Django settings for YADjBlog project.
 import os
-import dj_database_url
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
