@@ -115,7 +115,7 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates/blog'),
 )
 
-INSTALLED_APPS = (
+CORE_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -126,8 +126,16 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+)
+
+EXTERNAL_APPS = (
+        )
+
+INTERNAL_APPS = (
     'SerdarsBlog',
 )
+
+INSTALLED_APPS = CORE_APPS + EXTERNAL_APPS + INTERNAL_APPS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
