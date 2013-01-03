@@ -15,6 +15,9 @@ class Post(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        ordering = ['-created_on']
+
 class Comment(models.Model):
     # TODO: Comments can be linked with parent relationship
     name = models.CharField(max_length=50)
