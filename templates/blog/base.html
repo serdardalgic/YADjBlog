@@ -25,11 +25,12 @@
     <div class="wrapper">
       <h1 class="huge"><a href="{% url home %}">Serdar's Blog</a></h1>
       {% if user.is_staff %}
-      <h3 class="normal"><a href="{% url admin:index %}">Admin</a> | <a href="{% url admin:SerdarsBlog_post_add %}">Add post</a> | <a href="{% url SerdarsBlog.views.logout_page %}">Logout</a></h3>
+      <h3 class="normal"><a href="{% url admin:index %}">Admin</a> | <a href="{% url admin:SerdarsBlog_post_add %}">Add post</a> | <a href="{% url logout %}">Logout</a></h3>
+      <h4 class="small">Logged in as %s</h4>
       {% else %}
-      <h3 class="normal"><a href="mailto:sd@serdardalgic.org">Contact</a> | <a href="{% url SerdarsBlog.views.login_page %}">Login</a></h3>
+      <h3 class="normal"><a href="mailto:sd@serdardalgic.org">Contact</a> | <a href="{% url login %}">Login</a></h3>
       {% endif %}
-    </div>
+  </div>
   </header>
   
   {% block content %}
