@@ -4,6 +4,7 @@
     <div class="main">
 
 <body>
+    <center>
     {{ state }}
     <form action="/login/" method="post">
     {% csrf_token %}
@@ -11,8 +12,8 @@
         <input type="text" name="username" value="{{ username}}" /><br />
         password:
         <input type="password" name="password" value="" /><br />
-
         <input type="submit" value="Log In" />
     </form>
+    </center>
 </body>
 {% endblock %}
