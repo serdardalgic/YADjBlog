@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 from SerdarsBlog.models import Post
+from forms import UserForm
 
 def home(request):
     posts = Post.objects.all().order_by("-created_on")
@@ -49,6 +50,17 @@ def login_page(request):
 
     return render(request, 'login.html', {'state':state, 'username': username})
 
+def add_user(request):
+    if request.POST:
+        form = UserForm(request.POST)
+        if form.is_valid():
+            new_user = User.objects.create_user(**form.cleaned_data)
+            login(new_user)
+            return HttpResponseRedirect('/')
+    else:
+        form = UserForm()
+
+    return render(request, 'adduser.html', {'form': form})
 
 def logout_page(request):
     logout(request)
