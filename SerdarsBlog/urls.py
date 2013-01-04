@@ -9,6 +9,7 @@ urlpatterns = patterns('SerdarsBlog.views',
 
     url(r'^$', 'home', name='home'),
     url(r'^(\d+)/$', 'post', name='post'),
-    url(r'^logout/$', 'logout_page'),
-    url(r'^login/$', 'login_page'),
+    url(r'^logout/$', 'logout_page', name='logout'),
+    url(r'^login/$', 'login_page', name='login'),
+    url(r'^adduser/$', 'add_user'),
 )
