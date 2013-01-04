@@ -1,5 +1,5 @@
 # Create your views here.
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -28,6 +28,28 @@ def post(request, pk):
     post = Post.objects.get(pk=int(pk))
     return render(request, "post.html", dict(post=post, user=request.user))
 
+def login_page(request):
+    state = "Please log in below..."
+    username = password = ''
+    if request.POST:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                state = "You're successfully logged in!"
+                return HttpResponseRedirect('/')
+            else:
+                state = "Your account is not active, please contact the site admin."
+        else:
+            state = "Your username and/or password were incorrect."
+
+    return render(request, 'login.html', {'state':state, 'username': username})
+
+
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
+

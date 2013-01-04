@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^$', 'SerdarsBlog.views.home', name='home'),
     url(r'^(\d+)/$', 'SerdarsBlog.views.post', name='post'),
     url(r'^logout/$', 'SerdarsBlog.views.logout_page'),
+    url(r'^login/$', 'SerdarsBlog.views.login_page'),
 )
