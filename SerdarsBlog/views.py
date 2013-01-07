@@ -29,30 +29,9 @@ def home(request):
 
     return render(request, "list.html", dict(posts=posts, user=request.user))
 
-@login_required
 def post(request, pk):
     post = Post.objects.get(pk=int(pk))
     return render(request, "post.html", dict(post=post, user=request.user))
-
-def login_page(request):
-    state = _("Please log in below...")
-    username = password = ''
-    if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                state = _("You're successfully logged in!")
-                return HttpResponseRedirect('/')
-            else:
-                state = _("Your account is not active, please contact the site admin.")
-        else:
-            state = _("Your username and/or password were incorrect.")
-
-    return render(request, 'login.html', {'state':state, 'username': username})
 
 def add_user(request):
     if request.POST:
@@ -78,6 +57,26 @@ def confirm(request, activation_key):
     user_account.save()
 
     return HttpResponseRedirect('/')
+
+def login_page(request):
+    state = _("Please log in below...")
+    username = password = ''
+    if request.POST:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                state = _("You're successfully logged in!")
+                return HttpResponseRedirect('/')
+            else:
+                state = _("Your account is not active, please contact the site admin.")
+        else:
+            state = _("Your username and/or password were incorrect.")
+
+    return render(request, 'login.html', {'state':state, 'username': username})
 
 @login_required
 def logout_page(request):
