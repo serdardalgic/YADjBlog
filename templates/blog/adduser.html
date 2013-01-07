@@ -4,9 +4,15 @@
     <div class="main">
 
 <body>
-        <form method="post" action="">
-            {{ form.as_p }}
-        </form>
+    <form method="post" action="">
+        <table>
+            {% csrf_token %}
+            <tr><th>Username:</th><td><input type="text" name="username" maxlength="30" /><br /><span class="helptext">Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</span></td></tr>
+            <tr><th>Email:</th><td><input type="text" name="email" /></td></tr>
+            <tr><th>Password:</th><td><input type="password" name="password1" /></td></tr>
+            <tr><th>Password confirmation:</th><td><input type="password" name="password2" /><br /><span class="helptext">Enter the same password as above, for verification.</span></td></tr>
+    </table>
         <input type="submit" value="Create User">
+        </form>
 </body>
 {% endblock %}
