@@ -140,6 +140,9 @@ INTERNAL_APPS = (
 
 INSTALLED_APPS = CORE_APPS + EXTERNAL_APPS + INTERNAL_APPS
 
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.
