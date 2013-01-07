@@ -5,11 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
 
-from SerdarsBlog.models import Post
+from SerdarsBlog.models import Post, UserProfile
 from forms import UserForm
+
+import datetime
 
 def home(request):
     posts = Post.objects.all().order_by("-created_on")
@@ -62,6 +64,20 @@ def add_user(request):
         form = UserForm()
 
     return render(request, 'adduser.html', {'form': form})
+
+# new user confirmation:
+def confirm(request, activation_key):
+    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+
+    if user_profile.key_expires < datetime.datetime.today():
+        return HttpResponseRedirect('/')
+
+    # activate the user
+    user_account = user_profile.user
+    user_account.is_active = True
+    user_account.save()
+
+    return HttpResponseRedirect('/')
 
 @login_required
 def logout_page(request):
