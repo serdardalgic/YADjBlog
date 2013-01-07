@@ -3,17 +3,15 @@
 {% block content %}
     <div class="main">
 
-<body>
-    <center>
-    {{ state }}
-    <form action="/login/" method="post">
-    {% csrf_token %}
-        username:
-        <input type="text" name="username" value="{{ username}}" /><br />
-        password:
-        <input type="password" name="password" value="" /><br />
-        <input type="submit" value="Log In" />
-    </form>
-    </center>
-</body>
+        <body>
+            {{ state }}
+            <form action="/login/" method="post">
+                <table>
+                    {% csrf_token %}
+                    <tr><th>Username:</th><td><input type="text" name="username" value="{{ username}}" /><br /></td></tr>
+                    <tr><th>Password:</th><td><input type="password" name="password" value="" /><br /></td></tr>
+                </table>
+                <input type="submit" value="Log In" />
+            </form>
+        </body>
 {% endblock %}
