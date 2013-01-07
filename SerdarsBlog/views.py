@@ -1,5 +1,7 @@
 # Create your views here.
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -25,7 +27,7 @@ def home(request):
 
     return render(request, "list.html", dict(posts=posts, user=request.user))
 
-
+@login_required
 def post(request, pk):
     post = Post.objects.get(pk=int(pk))
     return render(request, "post.html", dict(post=post, user=request.user))
@@ -61,6 +63,7 @@ def add_user(request):
 
     return render(request, 'adduser.html', {'form': form})
 
+@login_required
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
