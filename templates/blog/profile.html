@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<center>
+    <table>
+        <tr>
+            <td><b>Username : </b></td><td>{{ user.username }} </td>
+        </tr>
+        <br>
+        <tr>
+            <td><b>E-mail address : </b></td><td>{{ user.email }} </td>
+        </tr>
+    </table>
+    <br>
+    <div class="form-actions">
+        <a href="{% url change_password %}"><button class="btn">Change Password</button></a>
+        <a href="{% url home %}"><button class="btn">Change E-mail</button></a>
+        <br><br>
+        <a href="{% url home %}"><button class="btn">Dsable My Account</button></a>
+    </div>
+</center>
+{% endblock %}
+

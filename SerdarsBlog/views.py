@@ -33,6 +33,15 @@ def post(request, pk):
     post = Post.objects.get(pk=int(pk))
     return render(request, "post.html", dict(post=post, user=request.user))
 
+
+@login_required
+def changepass(request):
+    return HttpResponseRedirect('/')
+
+@login_required
+def profile_info(request):
+    return render(request, 'profile.html')
+
 def add_user(request):
     if request.POST:
         form = UserForm(request.POST)
@@ -43,6 +52,7 @@ def add_user(request):
         form = UserForm()
 
     return render(request, 'adduser.html', {'form': form})
+
 
 # new user confirmation:
 def confirm(request, activation_key):
