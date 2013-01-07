@@ -14,7 +14,7 @@ from forms import UserForm
 import datetime
 
 def home(request):
-    posts = Post.objects.all().order_by("-created_on")
+    posts = Post.objects.all()
     paginator = Paginator(posts, 5)
 
     try:
@@ -55,16 +55,19 @@ def add_user(request):
 
 
 # new user confirmation:
+# TODO: must not be logged in decorator should be put here.
 def confirm(request, activation_key):
     user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
 
     if user_profile.key_expires < datetime.datetime.today():
+        #TODO: some kind of notification should be raised!
         return HttpResponseRedirect('/')
 
     # activate the user
     user_account = user_profile.user
     user_account.is_active = True
     user_account.save()
+    # TODO: this user should be logged-in
 
     return HttpResponseRedirect('/')
 
@@ -82,6 +85,9 @@ def login_page(request):
                 state = _("You're successfully logged in!")
                 return HttpResponseRedirect('/')
             else:
+                #TODO: More options:
+                # "is active" and "is verified" should be clarified.
+                # MARK AS LATER!
                 state = _("Your account is not active, please contact the site admin.")
         else:
             state = _("Your username and/or password were incorrect.")
