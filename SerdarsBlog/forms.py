@@ -10,7 +10,7 @@ from django.forms import EmailField
 from SerdarsBlog.models import UserProfile
 
 class UserForm(UserCreationForm):
-    email = EmailField(required=True)
+    email = EmailField(required=True, label='Email address', max_length=75)
 
     class Meta:
         model = User
@@ -43,9 +43,9 @@ class UserForm(UserCreationForm):
 
         email_subject = 'SerdarsBlog - Confirmation for Your New Account'
         email_body = 'Hello, %s, and thanks for registering for the blog \n'
-                'In order to active your account, click following link in '
-                'the next 48 hours: \n http://localhost:8000/confirm/%s'
-                %(user.username, activation_key)
+        'In order to active your account, click following link in '
+        'the next 48 hours: \n http://localhost:8000/confirm/%s' %(user.username, activation_key)
+
         send_mail(email_subject, email_body, 'sd@serdardalgic.org', [user.email])
 
 
