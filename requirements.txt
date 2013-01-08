@@ -6,3 +6,4 @@ ipython==0.13.1
 psycopg2==2.4.5
 uWSGI==1.4.2
 wsgiref==0.1.2
+South
