@@ -40,3 +40,6 @@ nosetests.xml
 
 # Django specific
 compiled_static
+
+# south, db migration tool specific
+migrations
