@@ -1,7 +1,7 @@
-# Create your views here.
+import datetime
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -10,8 +10,6 @@ from django.utils.translation import ugettext as _
 
 from SerdarsBlog.models import Post, UserProfile
 from forms import UserForm
-
-import datetime
 
 def home(request):
     posts = Post.objects.all()

@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from SerdarsBlog.models import Post
 
 class PostAdmin(admin.ModelAdmin):

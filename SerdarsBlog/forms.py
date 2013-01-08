@@ -1,14 +1,13 @@
-from django.forms import EmailField
+import hashlib
+import random
+import datetime
 
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
+from django.forms import EmailField
 
 from SerdarsBlog.models import UserProfile
-
-import hashlib
-import random
-import datetime
 
 class UserForm(UserCreationForm):
     email = EmailField(required=True)

@@ -1,7 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
 
-# Uncomment the next two lines to enable the admin:
-
 urlpatterns = patterns('SerdarsBlog.views',
     # Examples:
     # url(r'^$', 'DjangoBlogProject.views.home', name='home'),
