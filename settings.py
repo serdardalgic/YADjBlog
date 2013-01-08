@@ -131,6 +131,7 @@ CORE_APPS = (
 )
 
 EXTERNAL_APPS = (
+        'south',
         )
 
 INTERNAL_APPS = (
