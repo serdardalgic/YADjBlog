@@ -25,6 +25,7 @@ class Comment(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    is_verified = models.BooleanField(default=False)
     activation_key = models.CharField(max_length=40)
     key_expires = models.DateTimeField()
 
