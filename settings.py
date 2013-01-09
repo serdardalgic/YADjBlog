@@ -115,6 +115,7 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_DIR, 'templates'),
+    os.path.join(PROJECT_DIR, 'templates/blog'),
 )
 
 CORE_APPS = (
@@ -144,7 +145,7 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 
 AUTHENTICATION_BACKENDS = (
-        'SerdarsBlog.backends.EmailAuthBackend'
+        'SerdarsBlog.backends.EmailAuthBackend',
         )
 
 # A sample logging configuration. The only tangible logging

@@ -62,8 +62,10 @@ def confirm(request, activation_key):
         return HttpResponseRedirect('/')
 
     # activate the user
+    user_profile.is_verified = True
+    user_profile.save()
+    # FIXME: Check below, maybe we don't need this user_account
     user_account = user_profile.user
-    user_account.is_active = True
     user_account.save()
     # TODO: this user should be logged-in
 

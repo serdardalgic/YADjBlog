@@ -16,8 +16,15 @@ class UserForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        try:
+            user = User.objects.get(email=email)
+            raise forms.ValidationError("This email address is already taken.")
+        except User.DoesNotExist:
+            return email
+
     def save(self):
-        # TODO: check whether the user exists.
         # check Form validation.
         # BIG TODO: logins should be via e-mails instead of usernames!!
         user = User.objects.create_user(
@@ -25,7 +32,6 @@ class UserForm(UserCreationForm):
                 email = self.cleaned_data['email'],
                 password = self.cleaned_data['password1']
                 )
-        user.is_active = False
         user.save()
         # activation
         salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
@@ -36,7 +42,7 @@ class UserForm(UserCreationForm):
         key_expires = datetime.datetime.today()+datetime.timedelta(2)
 
         new_user = UserProfile(user = user, activation_key = activation_key,
-                key_expires = key_expires)
+                key_expires = key_expires, is_verified = False)
         new_user.save()
 
         # send_activation email
