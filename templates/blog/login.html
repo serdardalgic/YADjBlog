@@ -4,14 +4,20 @@
     <div class="main">
 
         <body>
-            {{ state }}
-            <form action="/login/" method="post">
-                <table>
-                    {% csrf_token %}
-                    <tr><th>Email Address:</th><td><input type="text" name="username" value="{{ username}}" /><br /></td></tr>
-                    <tr><th>Password:</th><td><input type="password" name="password" value="" /><br /></td></tr>
-                </table>
-                <input type="submit" value="Log In" />
-            </form>
+
+            <div class="form-actions">
+                {{ state }}
+                <form action="/login/" method="post">
+                    <table>
+                        {% csrf_token %}
+                        <tr><th>Email Address:</th><td><input type="text" name="username" value="{{ username}}" /><br /></td></tr>
+                        <tr><th>Password:</th><td><input type="password" name="password" value="" /><br /></td></tr>
+                    </table>
+                    <input type="submit" value="Log In" />
+                </form>
+                <br>
+                <a href="{% url add_user %}"><button class="btn">Register</button></a>
+
+            </div>
         </body>
 {% endblock %}
