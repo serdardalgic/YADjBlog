@@ -5,12 +5,12 @@ import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
-from django.forms import EmailField
+from django import forms
 
 from SerdarsBlog.models import UserProfile
 
 class UserForm(UserCreationForm):
-    email = EmailField(required=True, label='Email address', max_length=75)
+    email = forms.EmailField(required=True, label='Email address', max_length=75)
 
     class Meta:
         model = User
@@ -48,9 +48,9 @@ class UserForm(UserCreationForm):
         # send_activation email
 
         email_subject = 'SerdarsBlog - Confirmation for Your New Account'
-        email_body = 'Hello, %s, and thanks for registering for the blog \n'
-        'In order to active your account, click following link in '
-        'the next 48 hours: \n http://localhost:8000/confirm/%s' %(user.username, activation_key)
+        email_body = ('Hello! Thanks for registering for the blog \n' +
+        'In order to active your account, click following link in ' +
+        'the next 48 hours: \n http://localhost:8000/confirm/%s') % activation_key
 
         send_mail(email_subject, email_body, 'sd@serdardalgic.org', [user.email])
 
