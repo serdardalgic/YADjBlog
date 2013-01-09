@@ -26,7 +26,6 @@ class UserForm(UserCreationForm):
 
     def save(self):
         # check Form validation.
-        # BIG TODO: logins should be via e-mails instead of usernames!!
         user = User.objects.create_user(
                 username = self.cleaned_data['username'],
                 email = self.cleaned_data['email'],
