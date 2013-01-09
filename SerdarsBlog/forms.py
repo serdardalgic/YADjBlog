@@ -1,12 +1,9 @@
-import hashlib
-import random
-import datetime
-
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
 from django import forms
 
+from SerdarsBlog import utils
 from SerdarsBlog.models import UserProfile
 
 class UserForm(UserCreationForm):
@@ -33,12 +30,12 @@ class UserForm(UserCreationForm):
                 )
         user.save()
         # activation
-        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+        salt = utils.create_salt()
         username = user.username
         if isinstance(username, unicode):
             username = username.encode('utf-8')
-        activation_key = hashlib.sha1(salt+username).hexdigest()
-        key_expires = datetime.datetime.today()+datetime.timedelta(2)
+        activation_key = utils.create_activation_key(salt, username)
+        key_expires = utils.create_expire_date()
 
         new_user = UserProfile(user = user, activation_key = activation_key,
                 key_expires = key_expires, is_verified = False)
@@ -53,4 +50,5 @@ class UserForm(UserCreationForm):
 
         send_mail(email_subject, email_body, 'sd@serdardalgic.org', [user.email])
 
-
+class EmailForm():
+    pass
