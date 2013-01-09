@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -42,7 +43,13 @@ def profile_info(request):
 
 def add_user(request):
     if request.POST:
-        form = UserForm(request.POST)
+        data = request.POST.copy()
+        #FIXME: Maybe, below code can be a separate function, like clean_username()
+        username = data['email']
+        username = hashlib.sha1(username.lower()).hexdigest()[:30]
+        data['username'] = username
+        form = UserForm(data)
+
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/')
