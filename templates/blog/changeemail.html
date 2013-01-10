@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<form action="{% url change_email %}" method="post">{% csrf_token %}
-	<br>
-	<table>
-		{{ form.as_table }}
-	</table>
-	<div class="form-actions">
-	<button type="submit">Change E-mail</button>
-	</div>
-	</form>
-
+<center>
+    <form action="" method="post">{% csrf_token %}
+        <!--<br>-->
+        <table>
+            {{ form.as_table }}
+        </table>
+        <div class="form-actions">
+            <input type="submit" value="Change Email">
+        </div>
+    </form>
+</center>
 {% endblock %}
