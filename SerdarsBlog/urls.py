@@ -11,8 +11,9 @@ urlpatterns = patterns('SerdarsBlog.views',
     url(r'^login/$', 'login_page', name='login'),
     url(r'^adduser/$', 'add_user', name='add_user'),
     url(r'^confirm/(?P<activation_key>\w+)/$', 'confirm', name='confirm'),
+    url(r'^confirm_verification/(?P<activation_key>\w+)/$', 'confirm', name='confirm'),
     url(r'^profile/$', 'profile_info', name='profile'),
 
-    #url(r'^changeemail/$', changeemail, name="change_email"),
+    url(r'^changeemail/$', 'change_email', name="change_email"),
 
 )

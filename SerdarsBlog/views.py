@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
 
 from SerdarsBlog.models import Post, UserProfile
-from forms import UserForm
+from forms import UserForm, ChangeEmailForm
 
 def home(request):
     posts = Post.objects.all()
@@ -36,6 +36,22 @@ def post(request, pk):
 @login_required
 def changepass(request):
     return HttpResponseRedirect('/')
+
+@login_required
+def change_email(request):
+    if request.POST:
+        form = ChangeEmailForm(request.POST)
+        if form.is_valid():
+            form.save(request.user)
+            #TODO: redirect to somewhere with a meaning
+            return redirect('profile.html')
+    else:
+        form = ChangeEmailForm()
+
+    return render(request,
+            'changeemail.html',
+            {'form': form})
+
 
 @login_required
 def profile_info(request):
@@ -75,6 +91,18 @@ def confirm(request, activation_key):
     user_account = user_profile.user
     user_account.save()
     # TODO: this user should be logged-in
+
+    return HttpResponseRedirect('/')
+
+def confirm_verification(request, activation_key):
+    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+
+    if user_profile.key_expires < datetime.datetime.today():
+        #TODO: some kind of notification should be raised!
+        return HttpResponseRedirect('/')
+
+    user_account = user_profile.user
+    user_account.email =
 
     return HttpResponseRedirect('/')
 

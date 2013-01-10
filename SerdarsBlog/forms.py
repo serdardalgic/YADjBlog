@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
+from django.utils.translation import ugettext as _
 from django import forms
 
 from SerdarsBlog import utils
@@ -29,12 +30,10 @@ class UserForm(UserCreationForm):
                 password = self.cleaned_data['password1']
                 )
         user.save()
+
         # activation
-        salt = utils.create_salt()
         username = user.username
-        if isinstance(username, unicode):
-            username = username.encode('utf-8')
-        activation_key = utils.create_activation_key(salt, username)
+        activation_key = utils.create_activation_key(user, user.email)
         key_expires = utils.create_expire_date()
 
         new_user = UserProfile(user = user, activation_key = activation_key,
@@ -50,5 +49,35 @@ class UserForm(UserCreationForm):
 
         send_mail(email_subject, email_body, 'sd@serdardalgic.org', [user.email])
 
-class EmailForm():
-    pass
+class ChangeEmailForm(forms.Form):
+    new_email_address = forms.EmailField(_(u'new e-mail address'),
+            help_text=_(u'Your old email address will be used until you verify your new one.'),
+            required=True,
+            label='New Email Address')
+
+    def save(self, user):
+        userProfile = UserProfile.objects.get(user = user)
+        userProfile.activation_key = utils.create_activation_key(user,
+                self.cleaned_data["new_email_address"])
+        userProfile.key_expires = utils.create_expire_date()
+        userProfile.save()
+        send_verification(user)
+
+    def clean_email(self):
+        new_email_address = self.cleaned_data["email"]
+        try:
+            user = User.objects.get(email=new_email_address)
+            raise forms.ValidationError("This email address is already taken.")
+        except User.DoesNotExist:
+            return new_email_address
+
+    def send_verification(self, user):
+
+        email_subject = 'SerdarsBlog - Verify your new email address for SerdarsBlog'
+        email_body = ('Hi! You or another person wanted to change your' +
+        'SerdarsBlog account\'s email with this e-mail. If you agree to change your' +
+        'e-mail, click on the link below in the next 48 hours: \n' +
+        'http://localhost:8000/confirm_verification/%s') % user.activation_key
+
+        send_mail(email_subject, email_body, 'sd@serdardalgic.org', [user.email])
+
