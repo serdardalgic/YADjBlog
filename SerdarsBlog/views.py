@@ -10,7 +10,8 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
 
 from SerdarsBlog.models import Post, UserProfile
-from forms import UserForm, ChangeEmailForm
+from SerdarsBlog.forms import UserForm, ChangeEmailForm
+from SerdarsBlog.utils import uri_b64decode
 
 def home(request):
     posts = Post.objects.all()
@@ -44,7 +45,7 @@ def change_email(request):
         if form.is_valid():
             form.save(request.user)
             #TODO: redirect to somewhere with a meaning
-            return redirect('profile.html')
+            return HttpResponseRedirect('/profile')
     else:
         form = ChangeEmailForm()
 
@@ -87,6 +88,7 @@ def confirm(request, activation_key):
     # activate the user
     user_profile.is_verified = True
     user_profile.save()
+
     # FIXME: Check below, maybe we don't need this user_account
     user_account = user_profile.user
     user_account.save()
@@ -102,7 +104,9 @@ def confirm_verification(request, activation_key):
         return HttpResponseRedirect('/')
 
     user_account = user_profile.user
-    user_account.email =
+    user_account.email = uri_b64decode(str(activation_key[20:]))
+    user_account.save()
+    user_profile.save()
 
     return HttpResponseRedirect('/')
 
