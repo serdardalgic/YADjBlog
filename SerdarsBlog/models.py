@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 
+
 class Post(models.Model):
     author = models.ForeignKey(User)
     title = models.CharField(max_length=100)
@@ -14,6 +15,7 @@ class Post(models.Model):
     class Meta:
         ordering = ['-created_on']
 
+
 class Comment(models.Model):
     # TODO: Comments can be linked with parent relationship
     name = models.CharField(max_length=50)
@@ -23,6 +25,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post)
     created_on = models.DateTimeField(auto_now_add=True)
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     is_verified = models.BooleanField(default=False)
@@ -31,5 +34,3 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return self.user.username
-
-

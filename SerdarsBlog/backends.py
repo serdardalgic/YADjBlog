@@ -1,6 +1,7 @@
-from django.contrib.auth.models import User, check_password
+from django.contrib.auth.models import User
 
 from SerdarsBlog.models import UserProfile
+
 
 class EmailAuthBackend(object):
     """
@@ -17,7 +18,7 @@ class EmailAuthBackend(object):
             if user.check_password(password):
                 #TODO: Find a way to solve UserProfile.DoesNotExist problem
                 #try:
-                profile = UserProfile.objects.get(user = user)
+                profile = UserProfile.objects.get(user=user)
                 if profile.is_verified:
                     return user
                 #except UserProfile.DoesNotExist:

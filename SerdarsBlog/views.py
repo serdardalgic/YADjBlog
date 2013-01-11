@@ -4,7 +4,6 @@ import hashlib
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
@@ -12,6 +11,7 @@ from django.utils.translation import ugettext as _
 from SerdarsBlog.models import Post, UserProfile
 from SerdarsBlog.forms import UserForm, ChangeEmailForm
 from SerdarsBlog.utils import uri_b64decode
+
 
 def home(request):
     posts = Post.objects.all()
@@ -29,6 +29,7 @@ def home(request):
 
     return render(request, "list.html", dict(posts=posts, user=request.user))
 
+
 def post(request, pk):
     post = Post.objects.get(pk=int(pk))
     return render(request, "post.html", dict(post=post, user=request.user))
@@ -37,6 +38,7 @@ def post(request, pk):
 @login_required
 def changepass(request):
     return HttpResponseRedirect('/')
+
 
 @login_required
 def change_email(request):
@@ -50,18 +52,20 @@ def change_email(request):
         form = ChangeEmailForm()
 
     return render(request,
-            'changeemail.html',
-            {'form': form})
+                  'changeemail.html',
+                  {'form': form})
 
 
 @login_required
 def profile_info(request):
     return render(request, 'profile.html')
 
+
 def add_user(request):
     if request.POST:
         data = request.POST.copy()
-        #FIXME: Maybe, below code can be a separate function, like clean_username()
+        #FIXME: Maybe, below code can be a separate function,
+        #       like clean_username()
         username = data['email']
         username = hashlib.sha1(username.lower()).hexdigest()[:30]
         data['username'] = username
@@ -79,7 +83,8 @@ def add_user(request):
 # new user confirmation:
 # TODO: must not be logged in decorator should be put here.
 def confirm(request, activation_key):
-    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+    user_profile = get_object_or_404(UserProfile,
+                                     activation_key=activation_key)
 
     if user_profile.key_expires < datetime.datetime.today():
         #TODO: some kind of notification should be raised!
@@ -96,8 +101,10 @@ def confirm(request, activation_key):
 
     return HttpResponseRedirect('/')
 
+
 def confirm_verification(request, activation_key):
-    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+    user_profile = get_object_or_404(UserProfile,
+                                     activation_key=activation_key)
 
     if user_profile.key_expires < datetime.datetime.today():
         #TODO: some kind of notification should be raised!
@@ -109,6 +116,7 @@ def confirm_verification(request, activation_key):
     user_profile.save()
 
     return HttpResponseRedirect('/')
+
 
 def login_page(request):
     state = _("Please log in below...")
@@ -127,14 +135,16 @@ def login_page(request):
                 #TODO: More options:
                 # "is active" and "is verified" should be clarified.
                 # MARK AS LATER!
-                state = _("Your account is not active, please contact the site admin.")
+                state = _('Your account is not active,'
+                          'please contact the site admin.')
         else:
             state = _("Your username and/or password were incorrect.")
 
-    return render(request, 'login.html', {'state':state, 'username': username})
+    return render(request, 'login.html',
+                  {'state': state, 'username': username})
+
 
 @login_required
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
-

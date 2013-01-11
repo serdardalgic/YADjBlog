@@ -18,7 +18,7 @@ urlpatterns = patterns('',
 
     # Password change
     url(r'^changepass/$', 'django.contrib.auth.views.password_change', name='change_password'),
-    url(r'^password_change_done/$', 'django.contrib.auth.views.password_change_done', {'template_name' : 'profile.html'}),
+    url(r'^password_change_done/$', 'django.contrib.auth.views.password_change_done', {'template_name': 'profile.html'}),
 
     url(r'^', include('SerdarsBlog.urls')),
 )
