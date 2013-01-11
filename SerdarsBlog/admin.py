@@ -7,6 +7,7 @@ class PostAdmin(admin.ModelAdmin):
 
 class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ['user']
+    list_display = ['user', 'is_verified']
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
