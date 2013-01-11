@@ -1,6 +1,7 @@
 import datetime
 import hashlib
 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -119,7 +120,7 @@ def confirm_verification(request, activation_key):
 
 
 def login_page(request):
-    state = _("Please log in below...")
+    messages.info(request, 'Please log in below...')
     username = password = ''
     if request.POST:
         username = request.POST.get('username')
@@ -129,19 +130,19 @@ def login_page(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                state = _("You're successfully logged in!")
+                messages.info(request, 'You\'re successfully logged in!')
                 return HttpResponseRedirect('/')
             else:
                 #TODO: More options:
                 # "is active" and "is verified" should be clarified.
                 # MARK AS LATER!
-                state = _('Your account is not active,'
-                          'please contact the site admin.')
+                messages.warning(request, 'Your account is not active,'
+                                 'please contact the site admin.')
         else:
-            state = _("Your username and/or password were incorrect.")
+            messages.error(request, 'Your username and/or password were incorrect.')
 
     return render(request, 'login.html',
-                  {'state': state, 'username': username})
+                  {'username': username})
 
 
 @login_required

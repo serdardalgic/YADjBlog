@@ -6,7 +6,9 @@
         <body>
 
             <div class="form-actions">
-                {{ state }}
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
                 <form action="/login/" method="post">
                     <table>
                         {% csrf_token %}
