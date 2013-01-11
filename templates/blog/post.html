@@ -6,7 +6,7 @@
         <ul>
             <div class="title">{{ post.title }}</div>
             <ul>
-                <div class="time">{{ post.created_on }}</div>
+                <div class="time">{{ post.created_on }} <i>by</i>  {{ post.author.email }}</div>
                 <div class="body">{{ post.body|linebreaks }}</div>
             </ul>
             <a href="{% url home %}">Back to Blog Frontpage</a>
