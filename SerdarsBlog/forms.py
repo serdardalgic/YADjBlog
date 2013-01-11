@@ -61,7 +61,7 @@ class ChangeEmailForm(forms.Form):
                 self.cleaned_data["new_email_address"])
         userProfile.key_expires = utils.create_expire_date()
         userProfile.save()
-        send_verification(user)
+        self.send_verification(userProfile)
 
     def clean_email(self):
         new_email_address = self.cleaned_data["email"]
@@ -71,13 +71,15 @@ class ChangeEmailForm(forms.Form):
         except User.DoesNotExist:
             return new_email_address
 
-    def send_verification(self, user):
+    def send_verification(self, userProfile):
 
         email_subject = 'SerdarsBlog - Verify your new email address for SerdarsBlog'
-        email_body = ('Hi! You or another person wanted to change your' +
-        'SerdarsBlog account\'s email with this e-mail. If you agree to change your' +
+        email_body = ('Hi! You or another person wanted to change your ' +
+        'SerdarsBlog account\'s email with this e-mail. If you agree to change your ' +
         'e-mail, click on the link below in the next 48 hours: \n' +
-        'http://localhost:8000/confirm_verification/%s') % user.activation_key
+        'http://localhost:8000/confirm_verify/%s') % userProfile.activation_key
 
-        send_mail(email_subject, email_body, 'sd@serdardalgic.org', [user.email])
+        send_mail(email_subject, email_body,
+                'sd@serdardalgic.org',
+                [self.cleaned_data["new_email_address"]])
 
