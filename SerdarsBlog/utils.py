@@ -9,16 +9,15 @@ def create_salt():
 
 def create_activation_key(user, email):
     username = user.username
-    usersha = hashlib.sha1(create_salt() + username).hexdigest()
-    encoded_email = encode_mail(email)
-    return {usersha : usersha, encoded_email : encoded_email}
+    usersha = hashlib.sha1(create_salt() + username).hexdigest()[:20]
+    encoded_email = uri_b64encode(email)
+    return usersha + encoded_email
 
 def create_expire_date():
     return datetime.datetime.today() + datetime.timedelta(2)
 
-def encode_mail(email):
-    return base64.uri_b64encode(email)
-
+# URLsafe base64 encoding/decoding in two lines
+# http://fi.am/entry/urlsafe-base64-encodingdecoding-in-two-lines/
 def uri_b64encode(s):
     return urlsafe_b64encode(s).strip('=')
 
