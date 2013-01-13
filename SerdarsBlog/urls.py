@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns('SerdarsBlog.views',
+urlpatterns = patterns(
+    'SerdarsBlog.views',
     # Examples:
     # url(r'^$', 'DjangoBlogProject.views.home', name='home'),
     # url(r'^DjangoBlogProject/', include('DjangoBlogProject.foo.urls')),
