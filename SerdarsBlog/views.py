@@ -91,6 +91,15 @@ def change_email(request):
                   {'form': form})
 
 
+#@login_required
+def disable_account(request):
+    userProfile = get_object_or_404(UserProfile, user=request.user)
+    userProfile.user.is_active = False
+    userProfile.user.save()
+    logout(request)
+    return HttpResponseRedirect('/')
+
+
 @login_required
 def profile_info(request):
     return render(request, 'profile.html')

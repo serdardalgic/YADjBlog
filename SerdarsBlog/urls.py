@@ -19,5 +19,6 @@ urlpatterns = patterns(
     url(r'^profile/$', 'profile_info', name='profile'),
 
     url(r'^changeemail/$', 'change_email', name="change_email"),
+    url(r'^disable/$', 'disable_account', name="disable")
 
 )
