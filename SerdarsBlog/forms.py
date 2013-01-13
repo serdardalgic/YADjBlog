@@ -89,7 +89,8 @@ class ChangeEmailForm(forms.Form):
                       'SerdarsBlog account\'s email with this e-mail.' +
                       'If you agree to change your e-mail, click on' +
                       'the link below in the next 48 hours: \n' +
-                      'http://localhost:8000/confirm_verify/%s') % userProfile.activation_key
+                      'http://localhost:8000/confirm_verify/%s'
+                      ) % userProfile.activation_key
 
         send_mail(email_subject, email_body,
                   'sd@serdardalgic.org',

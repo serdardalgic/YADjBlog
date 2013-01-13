@@ -13,7 +13,8 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ['user']
     list_display = ['user', 'is_verified']
 
-UserAdmin.list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_staff')
+UserAdmin.list_display = ('email', 'first_name', 'last_name',
+                          'is_active', 'is_staff')
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

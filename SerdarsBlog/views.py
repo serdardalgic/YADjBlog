@@ -66,7 +66,8 @@ def edit(request, pk_id):
                                      'body': post.body})
         return render(request, 'edit.html', {'pk_id': pk_id, 'form': postform})
     else:
-        messages.error(request, _('You can not edit this post, because you are not the author'
+        messages.error(request, _('You can not edit this post,'
+                                  'because you are not the author'
                                   'of it.'))
 
 
@@ -182,7 +183,8 @@ def login_page(request):
                 messages.warning(request, _('Your account is not active,'
                                  'please contact the site admin.'))
         else:
-            messages.error(request, _('Your username and/or password were incorrect.'))
+            messages.error(request, _('Your username and/or'
+                                      'password were incorrect.'))
 
     return render(request, 'login.html',
                   {'username': username})
