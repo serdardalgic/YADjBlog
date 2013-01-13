@@ -7,7 +7,12 @@
 
             <div class="form-actions">
                 {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
+                    {% if messages|length == 1 %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endif %}
+                    {% if 'error' in message.tags %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endif %}
                 {% endfor %}
                 <form action="/login/" method="post">
                     <table>
