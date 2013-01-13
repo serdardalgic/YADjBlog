@@ -29,5 +29,6 @@ The static files (main.css, images) and templates are taken from [PyLadiesBYOBlo
   * can change their Profile infos (Needs login)
   * ~~can update their passwords (Needs login)~~
   * ~~can update their e-mails (Needs login)~~
+  * ~~can disable their accounts (Needs login)~~
 
 Skip the anonymous users for now.
