@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 from django import forms
 
 from SerdarsBlog import utils
-from SerdarsBlog.models import UserProfile
+from SerdarsBlog.models import Post, UserProfile
 
 
 class UserForm(UserCreationForm):
@@ -52,7 +52,7 @@ class UserForm(UserCreationForm):
                       'http://localhost:8000/confirm/%s') % activation_key
 
         send_mail(email_subject, email_body,
-            'sd@serdardalgic.org', [user.email])
+                  'sd@serdardalgic.org', [user.email])
 
 
 class ChangeEmailForm(forms.Form):
@@ -84,7 +84,7 @@ class ChangeEmailForm(forms.Form):
     def send_verification(self, userProfile):
 
         email_subject = ('SerdarsBlog - Verify your new email' +
-                        'address for SerdarsBlog')
+                         'address for SerdarsBlog')
         email_body = ('Hi! You or another person wanted to change your ' +
                       'SerdarsBlog account\'s email with this e-mail.' +
                       'If you agree to change your e-mail, click on' +
@@ -94,3 +94,16 @@ class ChangeEmailForm(forms.Form):
         send_mail(email_subject, email_body,
                   'sd@serdardalgic.org',
                   [self.cleaned_data["new_email_address"]])
+
+
+class BlogPostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        exclude = ["author", "created_on"]
+        widgets = {'body': forms.Textarea(attrs={'cols': 100, 'rows': 20}), }
+
+    def save(self, user):
+        post = Post(author=user,
+                    title=self.cleaned_data["title"],
+                    body=self.cleaned_data["body"])
+        post.save()

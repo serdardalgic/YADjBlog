@@ -10,7 +10,8 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
 
 from SerdarsBlog.models import Post, UserProfile
-from SerdarsBlog.forms import UserForm, ChangeEmailForm
+from SerdarsBlog.forms import (UserForm, ChangeEmailForm,
+                               BlogPostForm)
 from SerdarsBlog.utils import uri_b64decode
 
 
@@ -34,6 +35,20 @@ def home(request):
 def post(request, pk):
     post = Post.objects.get(pk=int(pk))
     return render(request, "post.html", dict(post=post, user=request.user))
+
+
+def addpost(request):
+    if request.POST:
+        form = BlogPostForm(request.POST)
+        if form.is_valid():
+            form.save(request.user)
+            return HttpResponseRedirect('/')
+    else:
+        form = BlogPostForm(request.POST)
+
+    return render(request,
+                  'addpost.html',
+                  {'form': form})
 
 
 @login_required
