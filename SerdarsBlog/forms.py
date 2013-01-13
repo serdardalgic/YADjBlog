@@ -102,8 +102,12 @@ class BlogPostForm(forms.ModelForm):
         exclude = ["author", "created_on"]
         widgets = {'body': forms.Textarea(attrs={'cols': 100, 'rows': 20}), }
 
-    def save(self, user):
-        post = Post(author=user,
-                    title=self.cleaned_data["title"],
-                    body=self.cleaned_data["body"])
+    def save(self, user, post=None):
+        if post:
+            post.title = self.cleaned_data["title"]
+            post.body = self.cleaned_data["body"]
+        else:
+            post = Post(author=user,
+                        title=self.cleaned_data["title"],
+                        body=self.cleaned_data["body"])
         post.save()

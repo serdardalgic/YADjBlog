@@ -37,6 +37,7 @@ def post(request, pk):
     return render(request, "post.html", dict(post=post, user=request.user))
 
 
+@login_required
 def addpost(request):
     if request.POST:
         form = BlogPostForm(request.POST)
@@ -49,6 +50,24 @@ def addpost(request):
     return render(request,
                   'addpost.html',
                   {'form': form})
+
+
+@login_required
+def edit(request, pk_id):
+    post = get_object_or_404(Post, pk=int(pk_id))
+    if request.user.id == post.author.id:
+        if request.POST:
+            postform = BlogPostForm(request.POST)
+            if postform.is_valid():
+                postform.save(request.user, post)
+                return HttpResponseRedirect('/')
+        else:
+            postform = BlogPostForm({'title': post.title,
+                                     'body': post.body})
+        return render(request, 'edit.html', {'pk_id': pk_id, 'form': postform})
+    else:
+        messages.error(request, _('You can not edit this post, because you are not the author'
+                                  'of it.'))
 
 
 @login_required
@@ -135,7 +154,7 @@ def confirm_verification(request, activation_key):
 
 
 def login_page(request):
-    messages.info(request, 'Please log in below...')
+    messages.info(request, _('Please log in below...'))
     username = password = ''
     if request.POST:
         username = request.POST.get('username')
@@ -145,16 +164,16 @@ def login_page(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                messages.info(request, 'You\'re successfully logged in!')
+                messages.info(request, _('You\'re successfully logged in!'))
                 return HttpResponseRedirect('/')
             else:
                 #TODO: More options:
                 # "is active" and "is verified" should be clarified.
                 # MARK AS LATER!
-                messages.warning(request, 'Your account is not active,'
-                                 'please contact the site admin.')
+                messages.warning(request, _('Your account is not active,'
+                                 'please contact the site admin.'))
         else:
-            messages.error(request, 'Your username and/or password were incorrect.')
+            messages.error(request, _('Your username and/or password were incorrect.'))
 
     return render(request, 'login.html',
                   {'username': username})

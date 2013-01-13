@@ -22,7 +22,7 @@ The static files (main.css, images) and templates are taken from [PyLadiesBYOBlo
 7. Users:
   * ~~can register by their e-mail address. That e-mail address should be verified via sending an authentication mail.~~
   * ~~can login via e-mail~~
-  * can create/edit a Blog Post (Needs login)
+  * ~~can create/edit a Blog Post (Needs login)~~
   * ~~can see Blog Posts~~
   * can comment on Blog Posts (Needs login)
   * can comment on Comments (Needs login)

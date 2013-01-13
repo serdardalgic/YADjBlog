@@ -10,7 +10,12 @@
                 <ul>
                     <div class="time">{{ post.created_on }} <i>by</i>  {{ post.author.email }}</div>
                     <div class="body">{{ post.body|truncatewords:50 }}</div>
-                    <div class="commentlink"><a href="{% url post post.pk %}">More</a></div>
+                    <div class="commentlink">
+                        <a href="{% url post post.pk %}">More</a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url edit post.pk %}">Edit</a>
+                        {% endif %}
+                    </div>
                 </ul>
                 <br />
             {% endfor %}
