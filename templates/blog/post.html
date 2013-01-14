@@ -9,7 +9,7 @@
                 <div class="time">{{ post.created_on }} <i>by</i>  {{ post.author.email }}</div>
                 <div class="body">{{ post.body|linebreaks }}</div>
             </ul>
-            {% if user.is_authenticated and user == post.author %}
+            {% if user.is_staff or user.is_authenticated and user == post.author %}
                 <a href="{% url edit post.pk %}">Edit</a> | 
             {% endif %}
             <a href="{% url home %}">Back to Blog Frontpage</a>
