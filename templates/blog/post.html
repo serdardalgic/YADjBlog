@@ -12,8 +12,13 @@
             {% if user.is_staff or user.is_authenticated and user == post.author %}
                 <a href="{% url edit post.pk %}">Edit</a> | 
             {% endif %}
+            <a href="{% url add_comment post.pk %}">Add Comment</a> |
             <a href="{% url home %}">Back to Blog Frontpage</a>
         </ul>
         <!-- Comments -->
-        <!-- If you have a Disqus account, copy & paste the Javascript code they gave you here. -->
+        <ul>
+            {% for comment in post.comments.all %}
+            <div class="body"> {{ comment.text }}</div>
+            {% endfor %}
+        </ul>
 {% endblock %}
