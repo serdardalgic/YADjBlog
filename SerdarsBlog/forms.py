@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 from django import forms
 
 from SerdarsBlog import utils
-from SerdarsBlog.models import Post, UserProfile
+from SerdarsBlog.models import Post, UserProfile, Comment
 
 
 class UserForm(UserCreationForm):
@@ -112,3 +112,18 @@ class BlogPostForm(forms.ModelForm):
                         title=self.cleaned_data["title"],
                         body=self.cleaned_data["body"])
         post.save()
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ["created_on", "content_type", "comment_id"]
+        widgets = {'text': forms.Textarea(attrs={'cols': 60, 'rows': 10}), }
+
+    def save(self, post):
+        comment = Comment(name=self.cleaned_data["name"],
+                          email=self.cleaned_data["email"],
+                          website=self.cleaned_data["website"],
+                          text=self.cleaned_data["text"],
+                          content_object=post)
+        comment.save()

@@ -12,6 +12,7 @@ urlpatterns = patterns(
     url(r'^login/$', 'login_page', name='login'),
     url(r'^adduser/$', 'add_user', name='add_user'),
     url(r'^addpost/$', 'addpost', name='addpost'),
+    url(r'^addcomment/(?P<pk_id>\d+)/$', 'addcomment', name='add_comment'),
     url(r'^edit/(?P<pk_id>\d+)/$', 'edit', name='edit'),
     url(r'^confirm/(?P<activation_key>\w+)/$', 'confirm', name='confirm'),
     url(r'^confirm_verify/(?P<activation_key>\w+)/$', 'confirm_verification',
