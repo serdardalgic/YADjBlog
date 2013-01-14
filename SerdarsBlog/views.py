@@ -69,7 +69,7 @@ def addcomment(request, pk_id):
 @login_required
 def edit(request, pk_id):
     post = get_object_or_404(Post, pk=int(pk_id))
-    if request.user.id == post.author.id:
+    if request.user.is_staff or request.user.id == post.author.id:
         if request.POST:
             postform = BlogPostForm(request.POST)
             if postform.is_valid():
