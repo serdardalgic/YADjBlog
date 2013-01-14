@@ -1,6 +1,7 @@
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.generic import GenericForeignKey
 from django.contrib.auth.models import User
 from django.db import models
-from django.template.defaultfilters import slugify
 
 
 class Post(models.Model):
@@ -22,7 +23,8 @@ class Comment(models.Model):
     email = models.EmailField(max_length=80)
     website = models.URLField(max_length=200, null=True, blank=True)
     text = models.TextField()
-    post = models.ForeignKey(Post)
+    content_type = models.ForeignKey(ContentType)
+    comment_id = models.PositiveIntegerField()
     created_on = models.DateTimeField(auto_now_add=True)
 
 
