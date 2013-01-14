@@ -1,5 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.generic import GenericForeignKey
+from django.contrib.contenttypes.generic import (GenericForeignKey,
+                                                 GenericRelation)
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -9,6 +10,8 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
+    comments = GenericRelation(Comment,
+                               object_id_field='comment_id')
 
     def __unicode__(self):
         return self.title
@@ -18,14 +21,18 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    # TODO: Comments can be linked with parent relationship
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=80)
     website = models.URLField(max_length=200, null=True, blank=True)
     text = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    # Content_object model
     content_type = models.ForeignKey(ContentType)
     comment_id = models.PositiveIntegerField()
-    created_on = models.DateTimeField(auto_now_add=True)
+    content_object = GenericForeignKey(fk_field='comment_id')
+    # Child Comments
+    comments = GenericRelation(Comment,
+                               object_id_field='comment_id')
 
 
 class UserProfile(models.Model):
