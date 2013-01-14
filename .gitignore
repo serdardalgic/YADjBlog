@@ -1,5 +1,4 @@
 *.py[cod]
-
 # vim changed files
 *~
 
@@ -37,6 +36,9 @@ nosetests.xml
 .project
 .pydevproject
 .ropeproject
+
+# Sqlite 3 Db Name
+django_blog_db
 
 # Django specific
 compiled_static
