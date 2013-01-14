@@ -145,7 +145,6 @@ def add_user(request):
 
 
 # new user confirmation:
-# TODO: must not be logged in decorator should be put here.
 @anonymous_required
 def confirm(request, activation_key):
     user_profile = get_object_or_404(UserProfile,
