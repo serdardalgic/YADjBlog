@@ -80,8 +80,8 @@ def edit(request, pk_id):
                                      'body': post.body})
         return render(request, 'edit.html', {'pk_id': pk_id, 'form': postform})
     else:
-        messages.error(request, _('You can not edit this post,'
-                                  'because you are not the author'
+        messages.error(request, _('You can not edit this post, '
+                                  'because you are not the author '
                                   'of it.'))
 
 
