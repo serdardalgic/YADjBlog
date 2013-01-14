@@ -26,7 +26,7 @@ The static files (main.css, images) and templates are taken from [PyLadiesBYOBlo
   * ~~can see Blog Posts~~
   * can comment on Blog Posts (Needs login)
   * can comment on Comments (Needs login)
-  * can change their Profile infos (Needs login)
+  * ~~can change their Profile infos (Needs login)~~
   * ~~can update their passwords (Needs login)~~
   * ~~can update their e-mails (Needs login)~~
   * ~~can disable their accounts (Needs login)~~
