@@ -10,7 +10,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    comments = GenericRelation(Comment,
+    comments = GenericRelation('SerdarsBlog.Comment',
                                object_id_field='comment_id')
 
     def __unicode__(self):
@@ -31,7 +31,7 @@ class Comment(models.Model):
     comment_id = models.PositiveIntegerField()
     content_object = GenericForeignKey(fk_field='comment_id')
     # Child Comments
-    comments = GenericRelation(Comment,
+    comments = GenericRelation('SerdarsBlog.Comment',
                                object_id_field='comment_id')
 
 
