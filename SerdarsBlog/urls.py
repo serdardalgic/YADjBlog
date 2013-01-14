@@ -19,6 +19,9 @@ urlpatterns = patterns(
         name='confirm_verification'),
     url(r'^profile/$', 'profile_info', name='profile'),
 
+    url(r'^error/noconfirmothersauth/$', 'noconfirm_when_others_authenticated',
+        name='noconfirmothersauth'),
+
     url(r'^changeemail/$', 'change_email', name="change_email"),
     url(r'^disable/$', 'disable_account', name="disable")
 

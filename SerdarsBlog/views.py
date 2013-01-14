@@ -13,6 +13,7 @@ from SerdarsBlog.models import Post, UserProfile
 from SerdarsBlog.forms import (UserForm, ChangeEmailForm,
                                BlogPostForm, CommentForm)
 from SerdarsBlog.utils import uri_b64decode
+from SerdarsBlog.decorators import anonymous_required
 
 
 def home(request):
@@ -90,6 +91,10 @@ def changepass(request):
     return HttpResponseRedirect('/')
 
 
+def noconfirm_when_others_authenticated(request):
+    return render(request, 'error/noconfirmothersauth.html')
+
+
 @login_required
 def change_email(request):
     if request.POST:
@@ -141,6 +146,7 @@ def add_user(request):
 
 # new user confirmation:
 # TODO: must not be logged in decorator should be put here.
+@anonymous_required
 def confirm(request, activation_key):
     user_profile = get_object_or_404(UserProfile,
                                      activation_key=activation_key)
@@ -161,6 +167,7 @@ def confirm(request, activation_key):
     return HttpResponseRedirect('/')
 
 
+@anonymous_required
 def confirm_verification(request, activation_key):
     user_profile = get_object_or_404(UserProfile,
                                      activation_key=activation_key)
@@ -177,6 +184,7 @@ def confirm_verification(request, activation_key):
     return HttpResponseRedirect('/')
 
 
+@anonymous_required
 def login_page(request):
     messages.info(request, _('Please log in below...'))
     username = password = ''
