@@ -34,6 +34,12 @@ class Comment(models.Model):
     comments = GenericRelation('SerdarsBlog.Comment',
                                object_id_field='comment_id')
 
+    def __unicode__(self):
+        return 'Comment %s - to  a %s: %s - %s' % (self.comment_id,
+                                                   self.content_type,
+                                                   self.content_object.__unicode__(),
+                                                   self.created_on)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

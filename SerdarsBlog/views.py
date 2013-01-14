@@ -11,7 +11,7 @@ from django.utils.translation import ugettext as _
 
 from SerdarsBlog.models import Post, UserProfile
 from SerdarsBlog.forms import (UserForm, ChangeEmailForm,
-                               BlogPostForm)
+                               BlogPostForm, CommentForm)
 from SerdarsBlog.utils import uri_b64decode
 
 
@@ -32,8 +32,8 @@ def home(request):
     return render(request, "list.html", dict(posts=posts, user=request.user))
 
 
-def post(request, pk):
-    post = Post.objects.get(pk=int(pk))
+def post(request, pk_id):
+    post = get_object_or_404(Post, pk=int(pk_id))
     return render(request, "post.html", dict(post=post, user=request.user))
 
 
@@ -50,6 +50,20 @@ def addpost(request):
     return render(request,
                   'addpost.html',
                   {'form': form})
+
+
+def addcomment(request, pk_id):
+    post = get_object_or_404(Post, pk=int(pk_id))
+    if request.POST:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save(post)
+            return HttpResponseRedirect('/')
+    else:
+        form = CommentForm(request.POST)
+
+    return render(request, 'addcomment.html',
+                  {'post': post, 'form': form})
 
 
 @login_required
