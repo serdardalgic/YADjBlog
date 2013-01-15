@@ -55,17 +55,18 @@ def addpost(request):
                   {'form': form})
 
 
-def addcomment(request, comment_type, pk_id):
-    post = comment = None
-    if comment_type == "post":
-        post = get_object_or_404(Post, pk=int(pk_id))
+def addcomment(request, comment_to, pk_id):
+    if comment_to == "post":
+        post = get_object_or_404(Post, pk=pk_id)
+        comment = None
     else:
-        comment = get_object_or_404(Comment, pk=int(pk_id))
+        comment = get_object_or_404(Comment, pk=pk_id)
+        post = comment.parent_object
 
     if request.POST:
         form = CommentForm(request.POST)
         if form.is_valid():
-            form.save(post if comment_type == "post" else comment)
+            form.save(post if comment_to == "post" else comment)
             return HttpResponseRedirect('/')
     else:
         form = CommentForm()

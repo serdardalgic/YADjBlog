@@ -10,8 +10,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    comments = GenericRelation('SerdarsBlog.Comment',
-                               object_id_field='comment_id')
+    comments = GenericRelation('SerdarsBlog.Comment')
 
     def __unicode__(self):
         return self.title
@@ -28,17 +27,16 @@ class Comment(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     # Content_object model
     content_type = models.ForeignKey(ContentType)
-    comment_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey(fk_field='comment_id')
+    object_id = models.PositiveIntegerField()
+    parent_object = GenericForeignKey('content_type', 'object_id')
     # Child Comments
-    comments = GenericRelation('SerdarsBlog.Comment',
-                               object_id_field='comment_id')
+    comments = GenericRelation('SerdarsBlog.Comment')
 
     def __unicode__(self):
-        return 'Comment %s - to  a %s: %s - %s' % (self.comment_id,
-                                                   self.content_type,
-                                                   self.content_object.__unicode__(),
-                                                   self.created_on)
+        return 'Comment %s - to %s %s:::: %s' % (self.id,
+                                                 self.content_type,
+                                                 self.object_id,
+                                                 self.created_on)
 
 
 class UserProfile(models.Model):
