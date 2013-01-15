@@ -18,15 +18,30 @@
         <!-- Comments -->
         <ul>
             {% for comment in post.comments.all %}
-            <div class="time">{{ comment.created_on }} <i>by</i>  {{comment.name }}</div>
+            <li>
+            <div class="time">{{ comment.created_on }} <i>by</i>
+                {% if comment.website %}
+                <a href="{{comment.website}}">{{comment.name }}</a>
+                {% else %}
+                {{comment.name }}
+                {% endif %}
+            </div>
             <div class="body"> {{ comment.text }}
-            <a href="{% url add_comment "comment" comment.pk %}">Add Comment</a></div>
+                <a href="{% url add_comment "comment" comment.pk %}">Add Comment</a></div>
+            <ul>
                 {% for subcomment in comment.comments.all %}
-                    <div class="time">{{ subcomment.created_on }} <i>by</i>
-                        {{subcomment.name }}</div>
-                    <div class="body"> {{ subcomment.text }}</div>
-                    <a href="{% url add_comment "comment" subcomment.pk %}">Add Comment</a> |
+                <div class="time">{{ subcomment.created_on }} <i>by</i>
+                    {% if subcomment.website %}
+                    <a href="{{subcomment.website}}">{{subcomment.name }}</a>
+                    {% else %}
+                    {{subcomment.name }}
+                    {% endif %}
+                </div>
+                <div class="body"> {{ subcomment.text }}</div>
+                <a href="{% url add_comment "comment" subcomment.pk %}">Add Comment</a> |
                 {% endfor %}
+            </ul>
             {% endfor %}
+            </li>
         </ul>
 {% endblock %}
