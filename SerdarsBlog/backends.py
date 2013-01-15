@@ -16,13 +16,10 @@ class EmailAuthBackend(object):
         try:
             user = User.objects.get(email=username, is_active=True)
             if user.check_password(password):
-                #TODO: Find a way to solve UserProfile.DoesNotExist problem
                 #try:
                 profile = UserProfile.objects.get(user=user)
                 if profile.is_verified:
                     return user
-                #except UserProfile.DoesNotExist:
-                    #return user
             else:
                 return None
         except User.DoesNotExist:
