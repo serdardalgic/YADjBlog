@@ -93,11 +93,6 @@ def edit(request, pk_id):
                                   'of it.'))
 
 
-@login_required
-def changepass(request):
-    return HttpResponseRedirect('/')
-
-
 def noconfirm_when_others_authenticated(request):
     return render(request, 'error/noconfirmothersauth.html')
 
