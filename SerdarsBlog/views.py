@@ -46,7 +46,7 @@ def addpost(request):
             form.save(request.user)
             return HttpResponseRedirect('/')
     else:
-        form = BlogPostForm(request.POST)
+        form = BlogPostForm()
 
     return render(request,
                   'addpost.html',
@@ -66,7 +66,7 @@ def addcomment(request, comment_type, pk_id):
             form.save(post if comment_type == "post" else comment)
             return HttpResponseRedirect('/')
     else:
-        form = CommentForm(request.POST)
+        form = CommentForm()
 
     return render(request, 'addcomment.html',
                   {'post': post,
