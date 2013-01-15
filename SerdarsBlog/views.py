@@ -66,8 +66,12 @@ def addcomment(request, comment_to, pk_id):
     if request.POST:
         form = CommentForm(request.POST)
         if form.is_valid():
-            form.save(post if comment_to == "post" else comment)
-            return HttpResponseRedirect('/')
+            if comment_to == "post":
+                form.save(post)
+                return HttpResponseRedirect('/%s' % post.pk)
+            else:
+                form.save(comment)
+                return HttpResponseRedirect('/')
     else:
         form = CommentForm()
 
@@ -85,7 +89,7 @@ def edit(request, pk_id):
             postform = BlogPostForm(request.POST)
             if postform.is_valid():
                 postform.save(request.user, post)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/%s' % post.pk_id)
         else:
             postform = BlogPostForm({'title': post.title,
                                      'body': post.body})
