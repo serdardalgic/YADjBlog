@@ -15,6 +15,8 @@ from SerdarsBlog.forms import (UserForm, ChangeEmailForm,
 from SerdarsBlog.utils import uri_b64decode
 from SerdarsBlog.decorators import anonymous_required
 
+ANON_REDIRECT = '/error/noconfirmothersauth'
+
 
 def home(request):
     posts = Post.objects.all()
@@ -147,7 +149,7 @@ def add_user(request):
 
 
 # new user confirmation:
-@anonymous_required
+@anonymous_required(redirect_to=ANON_REDIRECT)
 def confirm(request, activation_key):
     user_profile = get_object_or_404(UserProfile,
                                      activation_key=activation_key)
@@ -168,7 +170,7 @@ def confirm(request, activation_key):
     return HttpResponseRedirect('/')
 
 
-@anonymous_required
+@anonymous_required(redirect_to=ANON_REDIRECT)
 def confirm_verification(request, activation_key):
     user_profile = get_object_or_404(UserProfile,
                                      activation_key=activation_key)
@@ -185,7 +187,7 @@ def confirm_verification(request, activation_key):
     return HttpResponseRedirect('/')
 
 
-@anonymous_required
+@anonymous_required(redirect_to=ANON_REDIRECT)
 def login_page(request):
     messages.info(request, _('Please log in below...'))
     username = password = ''

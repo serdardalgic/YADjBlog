@@ -1,14 +1,17 @@
 from django.http import HttpResponseRedirect
 
 
-def anonymous_required(view_function, redirect_to=None):
-    return AnonymousRequired(view_function, redirect_to)
+def anonymous_required(redirect_to=None):
+    def wrapper(view_function):
+        return AnonymousRequired(view_function, redirect_to)
+    return wrapper
 
 
 class AnonymousRequired(object):
     def __init__(self, view_function, redirect_to):
         if redirect_to is None:
-            redirect_to = '/error/noconfirmothersauth'
+            from django.conf import settings
+            redirect_to = settings.LOGIN_REDIRECT_URL
         self.view_function = view_function
         self.redirect_to = redirect_to
 
