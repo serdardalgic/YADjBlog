@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
 
-from SerdarsBlog.models import Post, UserProfile
+from SerdarsBlog.models import Post, UserProfile, Comment
 from SerdarsBlog.forms import (UserForm, ChangeEmailForm,
                                BlogPostForm, CommentForm)
 from SerdarsBlog.utils import uri_b64decode
@@ -53,18 +53,25 @@ def addpost(request):
                   {'form': form})
 
 
-def addcomment(request, pk_id):
-    post = get_object_or_404(Post, pk=int(pk_id))
+def addcomment(request, comment_type, pk_id):
+    post = comment = None
+    if comment_type == "post":
+        post = get_object_or_404(Post, pk=int(pk_id))
+    else:
+        comment = get_object_or_404(Comment, pk=int(pk_id))
+
     if request.POST:
         form = CommentForm(request.POST)
         if form.is_valid():
-            form.save(post)
+            form.save(post if comment_type == "post" else comment)
             return HttpResponseRedirect('/')
     else:
         form = CommentForm(request.POST)
 
     return render(request, 'addcomment.html',
-                  {'post': post, 'form': form})
+                  {'post': post,
+                  'comment': comment,
+                  'form': form})
 
 
 @login_required

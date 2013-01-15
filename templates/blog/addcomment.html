@@ -18,7 +18,13 @@
         <!-- Comments -->
         <ul>
             {% for comment in post.comments.all %}
+            <div class="time">{{ comment.created_on }} <i>by</i>  {{comment.name }}</div>
             <div class="body"> {{ comment.text }}</div>
+                {% for subcomment in comment.comments.all %}
+                    <div class="time">{{ subcomment.created_on }} <i>by</i>
+                        {{subcomment.name }}</div>
+                    <div class="body"> {{ subcomment.text }}</div>
+                {% endfor %}
             {% endfor %}
 
             <form action="" method="post">{% csrf_token %}

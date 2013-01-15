@@ -12,13 +12,21 @@
             {% if user.is_staff or user.is_authenticated and user == post.author %}
                 <a href="{% url edit post.pk %}">Edit</a> | 
             {% endif %}
-            <a href="{% url add_comment post.pk %}">Add Comment</a> |
+            <a href="{% url add_comment "post" post.pk %}">Add Comment</a> |
             <a href="{% url home %}">Back to Blog Frontpage</a>
         </ul>
         <!-- Comments -->
         <ul>
             {% for comment in post.comments.all %}
-            <div class="body"> {{ comment.text }}</div>
+            <div class="time">{{ comment.created_on }} <i>by</i>  {{comment.name }}</div>
+            <div class="body"> {{ comment.text }}
+            <a href="{% url add_comment "comment" comment.pk %}">Add Comment</a></div>
+                {% for subcomment in comment.comments.all %}
+                    <div class="time">{{ subcomment.created_on }} <i>by</i>
+                        {{subcomment.name }}</div>
+                    <div class="body"> {{ subcomment.text }}</div>
+                    <a href="{% url add_comment "comment" subcomment.pk %}">Add Comment</a> |
+                {% endfor %}
             {% endfor %}
         </ul>
 {% endblock %}
