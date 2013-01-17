@@ -15,7 +15,7 @@ The static files (main.css, images) and templates are taken from [PyLadiesBYOBlo
 ## General Guidelines
 1. Coding should obey PEP8 rules restrictly.
 2. All html forms must be validated using django form. See [Django form and field validation](https://docs.djangoproject.com/en/1.3/ref/forms/validation/) for details.
-3. GenericForeignKey's must be used. See [Content Types Framework](https://docs.djangoproject.com/en/1.3/ref/contrib/contenttypes/) for details. 
+3. ~~GenericForeignKey's must be used. See [Content Types Framework](https://docs.djangoproject.com/en/1.3/ref/contrib/contenttypes/) for details.~~ 
 4. Caching should be encouraged. [Redis](http://redis.io/) must be used for cache backend. See [redis-py](https://github.com/andymccurdy/redis-py/) for details.
 5. Users can use up-to-a-certain-size images in their blog posts. These images must be resized using PIL, by using celery tasks in the backend part. For image upload, see [File Uploads](https://docs.djangoproject.com/en/1.3/topics/http/file-uploads/) ; HINT: a)celery decorator @task, check [celery docs](http://docs.celeryproject.org/en/latest/index.html) b)[StackOverflow Q1](http://stackoverflow.com/questions/4330719/django-celery-how-to-send-request-filesphoto-to-task)
 6. ~~Every user must have a profile. Use UserProfile of Django1.3, See [User authentication in Django](https://docs.djangoproject.com/en/1.3/topics/auth/) for details.~~
