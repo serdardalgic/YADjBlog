@@ -1,0 +1,21 @@
+<ul>
+    {% for comment in comments reversed %}
+        <li>
+        <div class="time">{{ comment.created_on }} <i>by</i>
+            {% if comment.website %}
+            <a href="{{ comment.website }}">{{ comment.name }}</a>
+            {% else %}
+            {{ comment.name }}
+            {% endif %}
+        </div>
+        <div class="body"> {{ comment.text }}
+            <a href="{% url add_comment "comment" comment.pk %}">Add Comment</a>
+        </div>
+        {% with "showcomments.html" as filename %}
+        {% with comments=comment.comments.all %}
+            {% include filename %}
+        {% endwith %}
+        {% endwith %}
+        </li>
+    {% endfor %}
+</ul>

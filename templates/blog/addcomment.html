@@ -1,54 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="main">
-        <!-- Posts  -->
-        <ul>
-            <div class="title">{{ post.title }}</div>
-            <ul>
-                <div class="time">{{ post.created_on }} <i>by</i>  {{ post.author.email }}</div>
-                <div class="body">{{ post.body|linebreaks }}</div>
-            </ul>
-            {% if user.is_staff or user.is_authenticated and user == post.author %}
-                <a href="{% url edit post.pk %}">Edit</a> | 
-            {% endif %}
-            <a href="{% url add_comment "post" post.pk %}">Add Comment</a> |
-            <a href="{% url home %}">Back to Blog Frontpage</a>
-        </ul>
-        <!-- Comments -->
-        <ul>
-            {% for comment in post.comments.all %}
-            <li>
-            <div class="time">{{ comment.created_on }} <i>by</i>
-                {% if comment.website %}
-                <a href="{{comment.website}}">{{comment.name }}</a>
-                {% else %}
-                {{comment.name }}
-                {% endif %}
-            </div>
-            <div class="body"> {{ comment.text }}</div>
-            <ul>
-                {% for subcomment in comment.comments.all reversed %}
-                <div class="time">{{ subcomment.created_on }} <i>by</i>
-                    {% if subcomment.website %}
-                    <a href="{{subcomment.website}}">{{subcomment.name }}</a>
-                    {% else %}
-                    {{subcomment.name }}
-                    {% endif %}
-                </div>
-                <div class="body"> {{ subcomment.text }}</div>
-                {% endfor %}
-            </ul>
-            {% endfor %}
-            </li>
-            <form action="" method="post">{% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <div class="form_actions">
-                    <input type="submit" value="Add Comment">
-                </div>
-            </form>
-        </ul>
-        <!-- If you have a Disqus account, copy & paste the Javascript code they gave you here. -->
-        {% endblock %}
+<div class="main">
+    <!-- Posts  -->
+    <ul>
+        {% include "showpost.html" %}
+    </ul>
+    <!-- Comments -->
+        {% with post.comments.all as comments %}
+        <div class="comments">
+            {% include "showcomments.html" %}
+        </div>
+        {% endwith %}
+        {% with value="Add\ Comment" %}
+            {% include "showform.html" %}
+        {% endwith %}
+</div>
+{% endblock %}

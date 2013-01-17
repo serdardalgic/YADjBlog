@@ -4,44 +4,13 @@
     <div class="main">
         <!-- Posts  -->
         <ul>
-            <div class="title">{{ post.title }}</div>
-            <ul>
-                <div class="time">{{ post.created_on }} <i>by</i>  {{ post.author.email }}</div>
-                <div class="body">{{ post.body|linebreaks }}</div>
-            </ul>
-            {% if user.is_staff or user.is_authenticated and user == post.author %}
-                <a href="{% url edit post.pk %}">Edit</a> | 
-            {% endif %}
-            <a href="{% url add_comment "post" post.pk %}">Add Comment</a> |
-            <a href="{% url home %}">Back to Blog Frontpage</a>
+            {% include "showpost.html" %}
         </ul>
         <!-- Comments -->
-        <ul>
-            {% for comment in post.comments.all %}
-            <li>
-            <div class="time">{{ comment.created_on }} <i>by</i>
-                {% if comment.website %}
-                <a href="{{comment.website}}">{{comment.name }}</a>
-                {% else %}
-                {{comment.name }}
-                {% endif %}
-            </div>
-            <div class="body"> {{ comment.text }}
-                <a href="{% url add_comment "comment" comment.pk %}">Add Comment</a></div>
-            <ul>
-                {% for subcomment in comment.comments.all %}
-                <div class="time">{{ subcomment.created_on }} <i>by</i>
-                    {% if subcomment.website %}
-                    <a href="{{subcomment.website}}">{{subcomment.name }}</a>
-                    {% else %}
-                    {{subcomment.name }}
-                    {% endif %}
-                </div>
-                <div class="body"> {{ subcomment.text }}</div>
-                <a href="{% url add_comment "comment" subcomment.pk %}">Add Comment</a> |
-                {% endfor %}
-            </ul>
-            {% endfor %}
-            </li>
-        </ul>
+        {% with post.comments.all as comments %}
+        <div class="comments">
+            {% include "showcomments.html" %}
+        </div>
+        {% endwith %}
+    </div>
 {% endblock %}

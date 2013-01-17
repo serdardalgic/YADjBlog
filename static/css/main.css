@@ -552,6 +552,7 @@ p,
 .main + .main {
   margin-top: 96px;
 }
+.comments ul {padding: 0 30px ;}
 @media screen and (min-width: 45em) {
   header .wrapper {
     float: right;
