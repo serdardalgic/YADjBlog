@@ -7,7 +7,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-        ('serdar', 'sd@serdardalgic.org')
+    ('serdar', 'sd@serdardalgic.org')
     # ('Your Name', 'your_email@example.com'),
 )
 
@@ -15,7 +15,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'django_blog_db',                  # Or path to database file if using sqlite3.
         'USER': 'postgres',              # Not used with sqlite3.
         'PASSWORD': 'postgres',          # Not used with sqlite3.
@@ -84,7 +85,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #   'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # URL of the login page.
@@ -97,7 +98,7 @@ SECRET_KEY = '^iq2j5sya@fi2sv8bq=(*xzgz%%a+2+&&ls-+m1n&(*z(+y@(6'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -133,9 +134,9 @@ CORE_APPS = (
 )
 
 EXTERNAL_APPS = (
-        'south',
-        'debug_toolbar',
-        )
+    'south',
+    'debug_toolbar',
+)
 
 INTERNAL_APPS = (
     'SerdarsBlog',
@@ -147,8 +148,8 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 
 AUTHENTICATION_BACKENDS = (
-        'SerdarsBlog.backends.EmailAuthBackend',
-        )
+    'SerdarsBlog.backends.EmailAuthBackend',
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
