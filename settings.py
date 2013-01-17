@@ -173,3 +173,12 @@ LOGGING = {
         },
     }
 }
+
+#CACHES = {
+    #"default": {
+        #'LOCATION': '127.0.0.1:6379',
+        #'OPTIONS': {
+            #'DB': 0,
+        #}
+    #}
+#}
