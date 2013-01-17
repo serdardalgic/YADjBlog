@@ -58,7 +58,7 @@ class UserForm(UserCreationForm):
 class ChangeEmailForm(forms.Form):
     new_email_address = forms.EmailField(
         _(u'new e-mail address'),
-        help_text=_(u'Your old email address will be used'
+        help_text=_('Your old email address will be used '
                     'until you verify your new one.'),
         required=True,
         label='New Email Address')
