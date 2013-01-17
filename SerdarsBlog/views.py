@@ -36,7 +36,7 @@ def home(request):
 
 
 def post(request, pk_id):
-    post = get_object_or_404(Post, pk=int(pk_id))
+    post = get_object_or_404(Post.objects.select_related(), pk=pk_id)
     return render(request, "post.html", dict(post=post, user=request.user))
 
 
@@ -57,10 +57,10 @@ def addpost(request):
 
 def addcomment(request, comment_to, pk_id):
     if comment_to == "post":
-        post = get_object_or_404(Post, pk=pk_id)
+        post = get_object_or_404(Post.objects.select_related(), pk=pk_id)
         comment = None
     else:
-        comment = get_object_or_404(Comment, pk=pk_id)
+        comment = get_object_or_404(Comment.objects.select_related(), pk=pk_id)
         post = comment.parent_object
 
     if request.POST:
@@ -83,7 +83,7 @@ def addcomment(request, comment_to, pk_id):
 
 @login_required
 def edit(request, pk_id):
-    post = get_object_or_404(Post, pk=int(pk_id))
+    post = get_object_or_404(Post.objects.select_related(), pk=pk_id)
     if request.user.is_staff or request.user.id == post.author.id:
         if request.POST:
             postform = BlogPostForm(request.POST)
@@ -122,7 +122,7 @@ def change_email(request):
 
 #@login_required
 def disable_account(request):
-    userProfile = get_object_or_404(UserProfile, user=request.user)
+    userProfile = get_object_or_404(UserProfile.objects.select_related(), user=request.user)
     userProfile.user.is_active = False
     userProfile.user.save()
     logout(request)
@@ -156,7 +156,7 @@ def add_user(request):
 # new user confirmation:
 @anonymous_required(redirect_to=ANON_REDIRECT)
 def confirm(request, activation_key):
-    user_profile = get_object_or_404(UserProfile,
+    user_profile = get_object_or_404(UserProfile.objects.select_related(),
                                      activation_key=activation_key)
 
     if user_profile.key_expires < datetime.datetime.today():
@@ -177,7 +177,7 @@ def confirm(request, activation_key):
 
 @anonymous_required(redirect_to=ANON_REDIRECT)
 def confirm_verification(request, activation_key):
-    user_profile = get_object_or_404(UserProfile,
+    user_profile = get_object_or_404(UserProfile.objects.select_related(),
                                      activation_key=activation_key)
 
     if user_profile.key_expires < datetime.datetime.today():

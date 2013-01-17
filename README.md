@@ -34,7 +34,6 @@ The static files (main.css, images) and templates are taken from [PyLadiesBYOBlo
 Skip the anonymous users for now.
 
 ### TODO:
-  * Use select_related
   * Use redirect shortcuts
   * Use reverse
   * Combine confirm and confirm_verification views. After confirmation, log in the user.
