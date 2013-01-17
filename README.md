@@ -32,3 +32,8 @@ The static files (main.css, images) and templates are taken from [PyLadiesBYOBlo
   * ~~can disable their accounts (Needs login)~~
 
 Skip the anonymous users for now.
+
+### TODO:
+  * Use select_related
+  * Use redirect shortcuts
+  * User reverse
