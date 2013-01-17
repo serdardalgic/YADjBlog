@@ -36,4 +36,7 @@ Skip the anonymous users for now.
 ### TODO:
   * Use select_related
   * Use redirect shortcuts
-  * User reverse
+  * Use reverse
+  * Combine confirm and confirm_verification views. After confirmation, log in the user.
+  * Make all strings translatable
+  * Drop messages in login_page view, use field validation.
