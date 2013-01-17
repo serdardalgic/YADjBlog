@@ -2,14 +2,6 @@
 
 {% block content %}
 <center>
-    <form action="" method="post">{% csrf_token %}
-        <!--<br>-->
-        <table>
-            {{ form.as_table }}
-        </table>
-        <div class="form-actions">
-            <input type="submit" value="Change Email">
-        </div>
-    </form>
+    {% include "showform.html" with value="Change Email" %}
 </center>
 {% endblock %}

@@ -2,13 +2,6 @@
 
 {% block content %}
 <center>
-    <form action="" method="post">{% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <div class="form_actions">
-            <input type="submit" value="Add Post">
-        </div>
-    </form>
+    {% include "showform.html" with value="Add Post" %}
 </center>
 {% endblock %}

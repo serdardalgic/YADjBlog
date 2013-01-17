@@ -12,8 +12,6 @@
             {% include "showcomments.html" %}
         </div>
         {% endwith %}
-        {% with value="Add\ Comment" %}
-            {% include "showform.html" %}
-        {% endwith %}
+        {% include "showform.html" with value="Add Comment" %}
 </div>
 {% endblock %}
