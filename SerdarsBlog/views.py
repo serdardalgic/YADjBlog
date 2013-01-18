@@ -62,6 +62,9 @@ def addcomment(request, comment_to, pk_id):
     else:
         comment = get_object_or_404(Comment.objects.select_related(), pk=pk_id)
         post = comment.parent_object
+        while(post.content_type.name != "post"):
+            post = post.parent_object
+        post = post.parent_object
 
     if request.POST:
         form = CommentForm(request.POST)
