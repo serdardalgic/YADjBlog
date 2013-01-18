@@ -106,8 +106,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'YADjBlog.urls'
@@ -136,6 +138,7 @@ CORE_APPS = (
 EXTERNAL_APPS = (
     'south',
     'debug_toolbar',
+    'redisboard',
 )
 
 INTERNAL_APPS = (
@@ -174,11 +177,12 @@ LOGGING = {
     }
 }
 
-#CACHES = {
-    #"default": {
-        #'LOCATION': '127.0.0.1:6379',
-        #'OPTIONS': {
-            #'DB': 0,
-        #}
-    #}
-#}
+CACHES = {
+    "default": {
+        'BACKEND': "redis_cache.cache.RedisCache",
+        'LOCATION': '127.0.0.1:6379',
+        'OPTIONS': {
+            'DB': 0
+        }
+    }
+}
